@@ -203,8 +203,8 @@ class Solver(object):
                 g_out_src = self.D(x_fake, label_trg)
                 g_loss_fake = F.binary_cross_entropy_with_logits(input=g_out_src, target=torch.ones_like(g_out_src, dtype=torch.float))
                 
-                out_cls = self.C(x_real)
-                g_loss_cls = CELoss(input=out_cls, target=speaker_idx_org)
+                out_cls = self.C(x_fake)
+                g_loss_cls = CELoss(input=out_cls, target=speaker_idx_trg)
 
                 # Target-to-original domain.
                 x_reconst = self.G(x_fake, label_org)
