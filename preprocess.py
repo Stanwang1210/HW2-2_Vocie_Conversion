@@ -17,20 +17,20 @@ CHUNK_SIZE = 1 # concate CHUNK_SIZE audio clips together
 EPSILON = 1e-10
 MODEL_NAME = 'starganvc_model'
 
-def load_wavs(dataset: str, sr):
+def load_wavs(dataset: str, sr): # sr is Sampleing Rate
     '''
     data dict contains all audios file path &
     resdict contains all wav files   
     '''
     data = {}
-    with os.scandir(dataset) as it:
+    with os.scandir(dataset) as it: # List all files and diretories in the specified path   
         for entry in it:
-            if entry.is_dir():
-                data[entry.name] = []
+            if entry.is_dir(): # the entry is a directory 
+                data[entry.name] = [] # the content entr.name is a null list
                 # print(entry.name, entry.path)
                 with os.scandir(entry.path) as it_f:
                     for onefile in it_f:
-                        if onefile.is_file():
+                        if onefile.is_file(): # the entry is a audio file
                             # print(onefile.path)
                             data[entry.name].append(onefile.path)
     print(f'loaded keys: {data.keys()}')
@@ -45,8 +45,12 @@ def load_wavs(dataset: str, sr):
             
             filename = one_file.split('/')[-1].split('.')[0] #like 100061
             newkey = f'{filename}'
-            wav, _ = librosa.load(one_file, sr=sr, mono=True, dtype=np.float64)
+            wav, _ = librosa.load(one_file, sr=sr, mono=True, dtype=np.float64) # wave, sr
             y,_ = librosa.effects.trim(wav, top_db=15)
+            # librosa.effects.trim(myrecording[fs:], top_db=50, frame_length=256, hop_length=64)
+            # Decreasing hop_length effectively increases the resolution for trimming. Decreasing top_db makes the function less sensitive, i.e., low level noise is also regarded as silence. Using a computer microphone, you do probably have quite a bit of low level background noise.
+            # If this all does not help, you might want to consider using SOX, or its Python wrapper pysox. It also has a trim function.
+            # Update Look at the waveform of your audio. Does it have a spike somewhere at the beginning? Some crack sound perhaps. That will keep librosa from trimming correctly. Perhaps manually throwing away the first second (=fs samples) and then trimming solves the issue:
             wav = np.append(y[0], y[1:] - 0.97 * y[:-1])
 
             resdict[key][newkey] = wav
@@ -126,7 +130,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = 'Convert the wav waveform to mel-cepstral coefficients(MCCs)\
     and calculate the speech statistical characteristics')
     
-    input_dir = './data/speakers'
+    input_dir = './data/vcc2016_training'
     output_dir = './data/processed'
    
     parser.add_argument('--input_dir', type = str, help = 'the direcotry contains data need to be processed', default = input_dir)
