@@ -1,5 +1,7 @@
 import os
 import argparse
+print('load!!!!!!!!!!!!!!!!!!!!!!!!!')
+torch.hub.load('pytorch/vision:v0.6.0', 'deeplabv3_resnet101', pretrained=True)
 from solver import Solver
 from data_loader import data_loader
 from torch.backends import cudnn
