@@ -16,7 +16,27 @@ SPEAKERS_NUM = len(speakers)
 CHUNK_SIZE = 1 # concate CHUNK_SIZE audio clips together
 EPSILON = 1e-10
 MODEL_NAME = 'starganvc_model'
+def load_wavs(dataset: str, sr):
+    '''
+    data dict contains all audios file path &
+    resdict contains all wav files
+    '''
+    data = {}
+    files = [f for f in glob.glob(os.path.join(dataset, "**/*.wav"), recursive = True)]
+    resdict = {}
+    for f in files:
+        person = f.split('/')[-1].split('_')[0]
+        print(f)
+        filename = f.split('/')[-1].split('_')[1].split('.')[0]
+        if person not in resdict:
+            resdict[person] = {}
+        wav, sr = librosa.load(f, sr, mono=True, dtype=np.float64)
+        y,_ = librosa.effects.trim(wav, top_db=15)
+        wav = np.append(y[0], y[1:] - 0.97 * y[:-1])
+        resdict[person][f'{filename}'] = wav
+    return resdict
 
+'''
 def load_wavs(dataset: str, sr): # sr is Sampleing Rate
     '''
     data dict contains all audios file path &
@@ -60,7 +80,7 @@ def load_wavs(dataset: str, sr): # sr is Sampleing Rate
 
     print(f'\nTotal {cnt} aduio files!')
     return resdict
-
+'''
 def chunks(iterable, size):
     """Yield successive n-sized chunks from iterable."""
     for i in range(0, len(iterable), size):
