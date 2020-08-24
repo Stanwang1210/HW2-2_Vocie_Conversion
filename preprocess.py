@@ -66,7 +66,7 @@ def chunks(iterable, size):
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
 
-def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './data/processed'):
+cddef wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './data/processed'):
     '''convert wavs to mcep feature using image repr'''
     shutil.rmtree(processed_filepath)
     os.makedirs(processed_filepath, exist_ok=True)
@@ -111,8 +111,8 @@ def world_features(wav, sr, fft_size, dim):
     f0, timeaxis = pyworld.harvest(wav, sr) # The fundamental period T0 of a voiced speech signal can be
                                             # defined as the elapsed time between two successive laryngeal pulses and the fundamental frequency is F0 = 1/T0 [1].
 
-    sp = pyworld.cheaptrick(wav, f0, timeaxis, sr,fft_size=fft_size)
-    ap = pyworld.d4c(wav, f0, timeaxis, sr, fft_size=fft_size)
+    sp = pyworld.cheaptrick(wav, f0, timeaxis, sr,fft_size=fft_size) # extract smoothed spectrogram
+    ap = pyworld.d4c(wav, f0, timeaxis, sr, fft_size=fft_size) # extract aperiodicity
     coded_sp = pyworld.code_spectral_envelope(sp, sr, dim)
 
     return f0, timeaxis, sp, ap, coded_sp
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = 'Convert the wav waveform to mel-cepstral coefficients(MCCs)\
     and calculate the speech statistical characteristics')
     
-    input_dir = './data/fourspeakers'
+    input_dir = './data/speakers'
     output_dir = './data/processed'
    
     parser.add_argument('--input_dir', type = str, help = 'the direcotry contains data need to be processed', default = input_dir)
