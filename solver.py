@@ -18,8 +18,7 @@ from sklearn.preprocessing import LabelBinarizer
 from pyworld import decode_spectral_envelope, synthesize
 import librosa
 import ast
-print('load!!!!!!!!!!!!!!!!!!!!!!!!!')
-torch.hub.load('pytorch/vision:v0.6.0', 'deeplabv3_resnet101', pretrained=True)
+
 class Solver(object):
     """docstring for Solver."""
     def __init__(self, data_loader, config):

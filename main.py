@@ -12,7 +12,8 @@ def str2bool(v):
 def main(config):
     # For fast training.
     cudnn.benchmark = True
-
+    print('load!!!!!!!!!!!!!!!!!!!!!!!!!')
+    torch.hub.load('pytorch/vision:v0.6.0', 'deeplabv3_resnet101', pretrained=True)
     # Create directories if not exist.
     if not os.path.exists(config.log_dir):
         os.makedirs(config.log_dir)
