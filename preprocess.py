@@ -95,7 +95,7 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
     print(f'Total {allwavs_cnt} audio files!')
 
     d = load_wavs(dataset, sr)
-    print(f"Dictionary looks like {d}")
+    print(f"Dictionary looks like {d.keys()}")
     stop
     for one_speaker in d.keys():
         values_of_one_speaker = list(d[one_speaker].values())
