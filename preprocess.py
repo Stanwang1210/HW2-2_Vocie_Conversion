@@ -84,7 +84,7 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
 
             #concate wavs
             for one in temp:
-                wav_concated.extend(one)
+                wav_concated.extend(one) # concat the content of one into wav_concated
             wav_concated = np.array(wav_concated)
 
             #process one batch of wavs 
@@ -108,7 +108,9 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
         
 
 def world_features(wav, sr, fft_size, dim):
-    f0, timeaxis = pyworld.harvest(wav, sr)
+    f0, timeaxis = pyworld.harvest(wav, sr) # The fundamental period T0 of a voiced speech signal can be
+                                            # defined as the elapsed time between two successive laryngeal pulses and the fundamental frequency is F0 = 1/T0 [1].
+
     sp = pyworld.cheaptrick(wav, f0, timeaxis, sr,fft_size=fft_size)
     ap = pyworld.d4c(wav, f0, timeaxis, sr, fft_size=fft_size)
     coded_sp = pyworld.code_spectral_envelope(sp, sr, dim)
@@ -130,7 +132,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = 'Convert the wav waveform to mel-cepstral coefficients(MCCs)\
     and calculate the speech statistical characteristics')
     
-    input_dir = './data/vcc2016_training'
+    input_dir = './data/fourspeakers'
     output_dir = './data/processed'
    
     parser.add_argument('--input_dir', type = str, help = 'the direcotry contains data need to be processed', default = input_dir)
