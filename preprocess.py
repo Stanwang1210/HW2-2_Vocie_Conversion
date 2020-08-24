@@ -66,7 +66,7 @@ def chunks(iterable, size):
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
 
-cddef wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './data/processed'):
+def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './data/processed'):
     '''convert wavs to mcep feature using image repr'''
     shutil.rmtree(processed_filepath)
     os.makedirs(processed_filepath, exist_ok=True)
