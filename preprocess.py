@@ -23,9 +23,9 @@ def load_wavs(dataset: str, sr):
     '''
     data = {}
     files = [f for f in glob.glob(os.path.join(dataset, "**/*.wav"), recursive = True)]
-    print(files)
-    print('hello')
-    raise InterruptedError
+    # print(files)
+    # print('hello')
+    # raise InterruptedError
     resdict = {}
     for f in files:
         person = f.split('/')[-1].split('_')[0]
@@ -98,8 +98,8 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
     print(f'Total {allwavs_cnt} audio files!')
 
     d = load_wavs(dataset, sr)
-    print(f"Dictionary looks like {d.keys()}")
-    stop
+    # print(f"Dictionary looks like {d.keys()}")
+    # stop
     for one_speaker in d.keys():
         values_of_one_speaker = list(d[one_speaker].values())
        
