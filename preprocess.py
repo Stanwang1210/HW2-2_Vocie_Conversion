@@ -39,8 +39,8 @@ def load_wavs(dataset: str, sr):
 '''
 def load_wavs(dataset: str, sr): # sr is Sampleing Rate
     '''
-    data dict contains all audios file path &
-    resdict contains all wav files   
+    #data dict contains all audios file path &
+    #resdict contains all wav files   
     '''
     data = {}
     with os.scandir(dataset) as it: # List all files and diretories in the specified path   
