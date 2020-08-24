@@ -1,5 +1,6 @@
 import os
 import argparse
+import torch
 print('load!!!!!!!!!!!!!!!!!!!!!!!!!')
 torch.hub.load('pytorch/vision:v0.6.0', 'deeplabv3_resnet101', pretrained=True)
 from solver import Solver
