@@ -23,6 +23,8 @@ def load_wavs(dataset: str, sr):
     '''
     data = {}
     files = [f for f in glob.glob(os.path.join(dataset, "**/*.wav"), recursive = True)]
+    print(files)
+    files
     resdict = {}
     for f in files:
         person = f.split('/')[-1].split('_')[0]
