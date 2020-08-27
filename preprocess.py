@@ -119,8 +119,9 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
             #concate wavs
             for one in temp:
                 wav_concated.extend(one) # concat the content of one into wav_concated
-            wav_concated = np.array(wav_concated)
             print(f'wav_concated looks like {wav_concated}')
+            wav_concated = np.array(wav_concated)
+            print(temp == wav_concated)
             #process one batch of wavs 
             f0, ap, sp, coded_sp = cal_mcep(wav_concated, sr=sr, dim=FEATURE_DIM)
             newname = f'{one_speaker}_{index}'
