@@ -33,13 +33,17 @@ def load_wavs(dataset: str, sr):
         filename = f.split('/')[-1].split('_')[1].split('.')[0]
         if person not in resdict:
             resdict[person] = {}
-        wav, sr = librosa.load(f, sr, mono=True, dtype=np.float64)
+        wav, sr = librosa.load(f, sr, mono=True, dtype=np.float64) # turn the audio to mono (1 channel)
         y,_ = librosa.effects.trim(wav, top_db=15)
-        print(f'y looks like {y}')
-        print(f'y[1:] looks like {y[1:]}')
-        print(f'0.97*y[:-1] looks like {0.97*y[:-1]}')
-        wav = np.append(y[0], y[1:] - 0.97 * y[:-1])
-        print(f'np.append(y[0], y[1:] - 0.97 * y[:-1] looks like {wav}')
+        
+        wav = np.append(y[0], y[1:] - 0.97 * y[:-1]) # # Preemphasis
+         # Pre-emphasis is a way to boost only the signal's high-frequency components, 
+         # while leaving the low-frequency components in their original state. 
+         # Pre-emphasis operates by boosting the high-frequency energy every time a transition in the data occurs. 
+         # The data edges contain the signal's high-frequency content. 
+         # The signal edges deteriorate with the loss of the high-frequency signal components.
+         # By https://www.ieee802.org/3/ak/public/dec02/MysticomCX4_Dec0602;6_taich.pdf
+         # Y[n] = (1-Preemphasis) * X[n] - Preemphasis * X[n-1] 
         resdict[person][f'{filename}'] = wav
     return resdict
 
@@ -92,6 +96,7 @@ def chunks(iterable, size):
     """Yield successive n-sized chunks from iterable."""
     for i in range(0, len(iterable), size):
         yield iterable[i:i + size]
+        # https://www.geeksforgeeks.org/use-yield-keyword-instead-return-keyword-python/
 
 def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './data/processed'):
     '''convert wavs to mcep feature using image repr'''
@@ -109,13 +114,13 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
        
         for index, one_chunk in enumerate (chunks(values_of_one_speaker, CHUNK_SIZE)):
             wav_concated = [] #preserve one batch of wavs
-            temp = one_chunk.copy()
-
+            temp = one_chunk.copy() #return a new copy of chunk
+            print(f'temp looks like {temp}')
             #concate wavs
             for one in temp:
                 wav_concated.extend(one) # concat the content of one into wav_concated
             wav_concated = np.array(wav_concated)
-
+            print(f'wav_concated looks like {wav_concated}')
             #process one batch of wavs 
             f0, ap, sp, coded_sp = cal_mcep(wav_concated, sr=sr, dim=FEATURE_DIM)
             newname = f'{one_speaker}_{index}'
