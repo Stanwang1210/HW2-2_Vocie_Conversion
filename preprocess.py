@@ -36,7 +36,7 @@ def load_wavs(dataset: str, sr):
         wav, sr = librosa.load(f, sr, mono=True, dtype=np.float64)
         y,_ = librosa.effects.trim(wav, top_db=15)
         print(f'y looks like {y}')
-        print(f'y[1:] looks like {y{1:}}')
+        print(f'y[1:] looks like {y[1:]}')
         print(f'0.97*y[:-1] looks like {0.97*y[:-1]}')
         wav = np.append(y[0], y[1:] - 0.97 * y[:-1])
         print(f'np.append(y[0], y[1:] - 0.97 * y[:-1] looks like {wav}')
