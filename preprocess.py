@@ -115,11 +115,11 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
         for index, one_chunk in enumerate (chunks(values_of_one_speaker, CHUNK_SIZE)):
             wav_concated = [] #preserve one batch of wavs
             temp = one_chunk.copy() #return a new copy of chunk
-            print(f'temp looks like {temp}')
+            #print(f'temp looks like {temp}')
             #concate wavs
             for one in temp:
                 wav_concated.extend(one) # concat the content of one into wav_concated
-            print(f'wav_concated looks like {wav_concated}')
+            #print(f'wav_concated looks like {wav_concated}')
             wav_concated = np.array(wav_concated)
             print(temp == wav_concated)
             #process one batch of wavs 
