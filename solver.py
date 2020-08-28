@@ -149,11 +149,11 @@ class Solver(object):
             label_trg = label_trg.to(self.device)     # Target domain one-hot labels.
             speaker_idx_org = speaker_idx_org.to(self.device) # Original domain labels
             speaker_idx_trg = speaker_idx_trg.to(self.device) #Target domain labels
-            print(f'x_real looks like {x_real.size()}')
-            print(f'label_org looks like {label_org.size()}')
-            print(f'label_trg looks like {label_trg.size()}')
-            print(f'speaker_idx_org looks like {speaker_idx_org.size()}')
-            print(f'speaker_idx_trg looks like {speaker_idx_trg.size()}')
+            print(f'x_real looks like {x_real} {x_real.size()}')
+            print(f'label_org looks like {label_org} {label_org.size()}')
+            print(f'label_trg looks like {label_trg} {label_trg.size()}')
+            print(f'speaker_idx_org looks like {speaker_idx_org} {speaker_idx_org.size()}')
+            print(f'speaker_idx_trg looks like {speaker_idx_trg} {speaker_idx_trg.size()}')
             # =================================================================================== #
             #                             2. Train the discriminator                              #
             # =================================================================================== #
