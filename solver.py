@@ -149,7 +149,11 @@ class Solver(object):
             label_trg = label_trg.to(self.device)     # Target domain one-hot labels.
             speaker_idx_org = speaker_idx_org.to(self.device) # Original domain labels
             speaker_idx_trg = speaker_idx_trg.to(self.device) #Target domain labels
-
+            print(f'x_real looks like {x_real.size()}')
+            print(f'label_org looks like {label_org.size()}')
+            print(f'label_trg looks like {label_trg.size()}')
+            print(f'speaker_idx_org looks like {speaker_idx_org.size()}')
+            print(f'speaker_idx_trg looks like {speaker_idx_trg.size()}')
             # =================================================================================== #
             #                             2. Train the discriminator                              #
             # =================================================================================== #
@@ -166,9 +170,13 @@ class Solver(object):
             loss['C/C_loss'] = cls_loss_real.item()
 
             out_r = self.D(x_real, label_org)
+            print(f'out_r looks like {out_r}   ', end = '')
+            print(out_r.size())
             # Compute loss with fake audio frame.
             x_fake = self.G(x_real, label_trg)
             out_f = self.D(x_fake.detach(), label_trg)
+            print(f'out_f looks like {out_f}   ', end = '')
+            print(out_f.size())
             d_loss_t = F.binary_cross_entropy_with_logits(input=out_f,target=torch.zeros_like(out_f, dtype=torch.float)) + \
                 F.binary_cross_entropy_with_logits(input=out_r, target=torch.ones_like(out_r, dtype=torch.float))
            

@@ -1,12 +1,13 @@
+import argparse
+import glob
+import os
+from datetime import datetime
+
 import librosa
 import numpy as np
-import os
 import pyworld
-import pyworld as pw
-import glob
+
 from utility import *
-import argparse
-from datetime import datetime
 
 FEATURE_DIM = 36
 SAMPLE_RATE = 16000
@@ -116,13 +117,13 @@ def wav_to_mcep_file(dataset: str, sr=SAMPLE_RATE, processed_filepath: str = './
             wav_concated = [] #preserve one batch of wavs
             temp = one_chunk.copy() #return a new copy of chunk
             #print(f'temp looks like {temp}')
-            #concate wavs
+            #concate wavs (mainly to unsqueeze the temp)
             for one in temp:
                 wav_concated.extend(one) # concat the content of one into wav_concated
             #print(f'wav_concated looks like {wav_concated}')
             wav_concated = np.array(wav_concated)
-            print(temp == wav_concated)
-            #process one batch of wavs 
+            # print(temp == wav_concated)
+            #process one batch of1 wavs 
             f0, ap, sp, coded_sp = cal_mcep(wav_concated, sr=sr, dim=FEATURE_DIM)
             newname = f'{one_speaker}_{index}'
             file_path_z = os.path.join(processed_filepath, newname)
@@ -148,6 +149,7 @@ def world_features(wav, sr, fft_size, dim):
 
     sp = pyworld.cheaptrick(wav, f0, timeaxis, sr,fft_size=fft_size) # extract smoothed spectrogram
     ap = pyworld.d4c(wav, f0, timeaxis, sr, fft_size=fft_size) # extract aperiodicity
+    # “aperiodicity” is defined as the power ratio between the speech signal and the aperiodic component of the signal.
     coded_sp = pyworld.code_spectral_envelope(sp, sr, dim)
 
     return f0, timeaxis, sp, ap, coded_sp

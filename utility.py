@@ -44,7 +44,7 @@ class Normalizer(object):
         
         self.folderpath = statfolderpath
 
-        self.norm_dict = self.normalizer_dict()
+        self.norm_dict = self.normalizer_dict() # self.normalizer_dict() will return the dictionary for normalization
 
     def forward_process(self, x, speakername):
         mean = self.norm_dict[speakername]['coded_sps_mean']
@@ -168,7 +168,7 @@ class GenerateStatistics(object):
             filename = os.path.basename(p)
             speaker = filename.split(sep='_', maxsplit=1)[0]
             mcep = np.load(p)
-            mcep_normed = norm.forward_process(mcep, speaker)
+            mcep_normed = norm.forward_process(mcep, speaker) # forward process will normalized mcep
             os.remove(p)
             np.save(p, mcep_normed)
             print(f'[normalize]:{p}')
