@@ -77,7 +77,7 @@ if __name__ == '__main__':
     parser.add_argument('--use_tensorboard', type=str2bool, default=True)
 
     # Directories.
-    parser.add_argument('--data_dir', type=str, default='data/processed)
+    parser.add_argument('--data_dir', type=str, default='data/processed')
     parser.add_argument('--test_dir', type=str, default='data/speakers_test/iter300000')
     parser.add_argument('--log_dir', type=str, default='starganvc/logs/iter300000')
     parser.add_argument('--model_save_dir', type=str, default='starganvc/models/iter300000')
