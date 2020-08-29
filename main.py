@@ -77,12 +77,12 @@ if __name__ == '__main__':
     parser.add_argument('--use_tensorboard', type=str2bool, default=True)
 
     # Directories.
-    parser.add_argument('--data_dir', type=str, default='data/processed')
-    parser.add_argument('--test_dir', type=str, default='data/speakers_test')
-    parser.add_argument('--log_dir', type=str, default='starganvc/logs')
-    parser.add_argument('--model_save_dir', type=str, default='starganvc/models')
-    parser.add_argument('--sample_dir', type=str, default='starganvc/samples')
-    parser.add_argument('--result_dir', type=str, default='starganvc/results')
+    parser.add_argument('--data_dir', type=str, default='data/processed)
+    parser.add_argument('--test_dir', type=str, default='data/speakers_test/iter300000')
+    parser.add_argument('--log_dir', type=str, default='starganvc/logs/iter300000')
+    parser.add_argument('--model_save_dir', type=str, default='starganvc/models/iter300000')
+    parser.add_argument('--sample_dir', type=str, default='starganvc/samples/iter300000')
+    parser.add_argument('--result_dir', type=str, default='starganvc/results/iter300000')
     
     # Step size.
     parser.add_argument('--log_step', type=int, default=10)
