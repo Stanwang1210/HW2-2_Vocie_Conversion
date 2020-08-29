@@ -141,7 +141,7 @@ class Solver(object):
 
             # Generate target domain labels randomly.
             rand_idx = torch.randperm(label_org.size(0))
-            print(f'rand_idx looks like {rand_idx}')
+            # print(f'rand_idx looks like {rand_idx}')
             label_trg = label_org[rand_idx]
             speaker_idx_trg = speaker_idx_org[rand_idx]
             
